@@ -112,6 +112,10 @@ function cookie_consent_init() {
  * You can implement your this hook in your own module to add additional categories.
  */
 function cookie_consent_cookie_consent_categories() {
+  $cookies['necessary'] = array(
+    'title' => t('Strictly necessary'),
+    'description' => t('Some cookies on this website are strictly necessary and cannot be disabled.'),
+  );
   $cookies['social'] = array(
     'title' => t('Social Media'),
     'description' => t('Facebook, Twitter and other social websites need to know who you are to work properly.'),
@@ -119,10 +123,6 @@ function cookie_consent_cookie_consent_categories() {
   $cookies['advertising'] = array(
     'title' => t('Advertising'),
     'description' => t('Adverts will be chosen for you automatically based on your past behaviour and interests.'),
-  );
-  $cookies['necessary'] = array(
-    'title' => t('Strictly necessary'),
-    'description' => t('Some cookies on this website are strictly necessary and cannot be disabled.'),
   );
   $cookies['analytics'] = array(
     'title' => t('Analytics'),
@@ -213,14 +213,18 @@ function cookie_consent_preprocess_page(&$page) {
 /**
  * API function to retrieve all categories
  */
-function _cookie_consent_get_categories() {
-  // Get all categories
-  $categories = module_invoke_all('cookie_consent_categories');
+function _cookie_consent_get_categories($reset = FALSE) {
+  static $categories = array();
 
-  // Let modules get a chance to alter the categories
-  foreach (module_implements('cookie_consent_categories_alter') as $module) {
-    $function = $module . '_cookie_consent_categories_alter';
-    $function($categories);
+  if (empty($categories) || $reset) {
+    // Get all categories
+    $categories = module_invoke_all('cookie_consent_categories');
+
+    // Let modules get a chance to alter the categories
+    foreach (module_implements('cookie_consent_categories_alter') as $module) {
+      $function = $module . '_cookie_consent_categories_alter';
+      $function($categories);
+    }
   }
 
   return $categories;
