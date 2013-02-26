@@ -65,8 +65,7 @@ function cookie_consent_init() {
   }
 
   $cookie_consent = TRUE;
-
-  $cookies = array_intersect_assoc(module_invoke_all('cookie_consent_categories'), _cookie_consent_get_patterns());
+  $cookies = array_intersect_assoc(_cookie_consent_get_categories(), _cookie_consent_get_patterns());
 
   // We cannot use Drupal.settings, because the cookie compliance
   // script must kick in before the Druapl.settings object is added to the page.
@@ -95,6 +94,11 @@ function cookie_consent_init() {
  * You can implement your this hook in your own module to add additional categories.
  */
 function cookie_consent_cookie_consent_categories() {
+  $cookies['necessary'] = array(
+    'title' => t('Strictly necessary'),
+    'description' => t('Some cookies on this website are strictly necessary and cannot be disabled.'),
+    'weight' => -10,
+  );
   $cookies['social'] = array(
     'title' => t('Social Media'),
     'description' => t('Facebook, Twitter and other social websites need to know who you are to work properly.'),
@@ -102,10 +106,6 @@ function cookie_consent_cookie_consent_categories() {
   $cookies['advertising'] = array(
     'title' => t('Advertising'),
     'description' => t('Adverts will be chosen for you automatically based on your past behaviour and interests.'),
-  );
-  $cookies['necessary'] = array(
-    'title' => t('Strictly necessary'),
-    'description' => t('Some cookies on this website are strictly necessary and cannot be disabled.'),
   );
   $cookies['analytics'] = array(
     'title' => t('Analytics'),
@@ -124,7 +124,7 @@ function cookie_consent_add() {
     return drupal_access_denied();
   }
 
-  $cookies = module_invoke_all('cookie_consent_categories');
+  $cookies = _cookie_consent_get_categories();
   $type = check_plain($_GET['type']);
 
   // Check if we have this type defined.
@@ -228,6 +228,28 @@ function cookie_consent_alter_iframe($html, $page) {
 }
 
 /**
+ * API function to retrieve all categories
+ */
+function _cookie_consent_get_categories($reset = FALSE) {
+  $categories = &drupal_static(__FUNCTION__);
+
+  if (!isset($categories) or $reset) {
+    // Get all categories
+    $categories = module_invoke_all('cookie_consent_categories');
+
+    // Let modules get a chance to alter the categories
+    foreach (module_implements('cookie_consent_categories_alter') as $module) {
+      $function = $module . '_cookie_consent_categories_alter';
+      $function($categories);
+    }
+
+    uasort($categories, 'drupal_sort_weight');
+  }
+
+  return $categories;
+}
+
+/**
  * API function to retrieve current patterns.
  */
 function _cookie_consent_get_patterns() {
@@ -235,7 +257,8 @@ function _cookie_consent_get_patterns() {
 
   if (!isset($build)) {
     $build = array();
-    foreach (module_invoke_all('cookie_consent_categories') as $category => $info) {
+
+    foreach (_cookie_consent_get_categories() as $category => $info) {
       $multiline_string = variable_get('cookie_consent_' . $category, NULL);
 
       if ($multiline_string === null OR empty($multiline_string)) {
