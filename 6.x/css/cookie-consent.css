@@ -1136,6 +1136,13 @@ DARK STYLE
 	font-size: 10pt !important;
 	width: 150px;
 }
+body.ie7 #cc-settingsmodal #cc-settingsmodal-wrapper select,
+body.ie7 #cc-modal #cc-modal-wrapper select,
+body.ie8 #cc-settingsmodal #cc-settingsmodal-wrapper select,
+body.ie8 #cc-modal #cc-modal-wrapper select
+{
+  top: 50px;
+}
 
 #cc-settingsmodal.cc-mobile #cc-settingsmodal-wrapper select,
 #cc-modal.cc-mobile #cc-modal-wrapper select
@@ -1155,6 +1162,14 @@ DARK STYLE
 #cc-modal #cc-modal-wrapper ul li label
 {
 	float: left;
+}
+
+body.ie7 #cc-settingsmodal #cc-settingsmodal-wrapper ul li label,
+body.ie7 #cc-modal #cc-modal-wrapper ul li label,
+body.ie8 #cc-settingsmodal #cc-settingsmodal-wrapper ul li label,
+body.ie8 #cc-modal #cc-modal-wrapper ul li label {
+  position: relative;
+  top: -30px;
 }
 
 #cc-settingsmodal #cc-settingsmodal-wrapper ul,
