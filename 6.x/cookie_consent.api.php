@@ -14,7 +14,8 @@ function hook_cookie_consent_categories() {
   // Make sure that the key does not contain spaces.
   $categories['mycategory'] = array(
     'title' => t('My Category Title'),
-    'description' => t('My Category Description.')
+    'description' => t('My Category Description.'),
+    'weight' => 10, // Set the weight compared to other categories
   );
 
   return $categories;
@@ -25,4 +26,5 @@ function hook_cookie_consent_categories() {
  */
 function hook_cookie_consent_categories_alter(&$categories) {
   $categories['mycategory']['title'] = t('My Title');
+  $categories['mycategory']['weight'] = -20;
 }

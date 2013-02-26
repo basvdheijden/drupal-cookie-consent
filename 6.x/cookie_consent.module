@@ -115,6 +115,7 @@ function cookie_consent_cookie_consent_categories() {
   $cookies['necessary'] = array(
     'title' => t('Strictly necessary'),
     'description' => t('Some cookies on this website are strictly necessary and cannot be disabled.'),
+    'weight' => -10,
   );
   $cookies['social'] = array(
     'title' => t('Social Media'),
@@ -225,9 +226,25 @@ function _cookie_consent_get_categories($reset = FALSE) {
       $function = $module . '_cookie_consent_categories_alter';
       $function($categories);
     }
+
+    uasort($categories, '_cookie_consent_sort_weight');
   }
 
   return $categories;
+}
+
+/**
+ * API function needed for Drupal 6 to sort
+ * elements according to their weight
+ * This is a direct clone of Drupal 7's drupal_sort_weight().
+ */
+function _cookie_consent_sort_weight($a, $b) {
+  $a_weight = (is_array($a) && isset($a['weight'])) ? $a['weight'] : 0;
+  $b_weight = (is_array($b) && isset($b['weight'])) ? $b['weight'] : 0;
+  if ($a_weight == $b_weight) {
+    return 0;
+  }
+  return ($a_weight < $b_weight) ? -1 : 1;
 }
 
 /**
