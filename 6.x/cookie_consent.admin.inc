@@ -21,6 +21,22 @@ function cookie_consent_admin_form() {
     '#default_value' => variable_get('cookie_consent_roles', array()),
   );
 
+  if (module_exists('domain')) {
+    foreach(domain_domains() as $domain) {
+      $domain_options[$domain['domain_id']] = $domain['sitename'];
+    }
+
+    $form['cookie_consent_domains'] = array(
+      '#type' => 'select',
+      '#multiple' => TRUE,
+      '#title' => t('Domains'),
+      '#options' => $domain_options,
+      '#default_value' => variable_get('cookie_consent_domains', array()),
+      '#description' => t('Determine on which domains the cookie consent is shown.'),
+      '#size' => max(5, count($domain_options)),
+    );
+  }
+
   $form['cookie_consent_style'] = array(
     '#type' => 'select',
     '#options' => array(

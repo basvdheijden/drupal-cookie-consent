@@ -81,10 +81,20 @@ function cookie_consent_theme_registry_alter(&$theme_registry) {
 function cookie_consent_init() {
   global $user, $cookie_consent;
 
+  $domain = TRUE;
+  if (module_exists('domain')) {
+    $domains = variable_get('cookie_consent_domains', array());
+    $current_domain = domain_get_domain();
+    if (!isset($domains[$current_domain['domain_id']])) {
+      $domain = FALSE;
+    }
+  }
+
   if (!array_intersect(array_keys($user->roles), variable_get('cookie_consent_roles', array())) or
-      (preg_match('/^admin/', $_GET['q']))) {
+      (preg_match('/^admin/', $_GET['q'])) or !$domain) {
     // Cookie consent is configured to not show for this role.
     // Or we're dealing with an admin page.
+    // Or the current domain is excluded.
     $cookie_consent = FALSE;
     return;
   }
