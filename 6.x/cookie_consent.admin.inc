@@ -10,6 +10,17 @@
 function cookie_consent_admin_form() {
   $form = array();
 
+  $roles = user_roles();
+  $form['cookie_consent_roles'] = array(
+    '#type' => 'select',
+    '#multiple' => TRUE,
+    '#title' => t('Roles'),
+    '#options' => $roles,
+    '#size' => max(5, count($roles)),
+    '#description' => t('Determine which roles see the cookie consent banner by default.'),
+    '#default_value' => variable_get('cookie_consent_roles', array()),
+  );
+
   $form['cookie_consent_style'] = array(
     '#type' => 'select',
     '#options' => array(
