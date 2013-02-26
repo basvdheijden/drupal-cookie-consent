@@ -39,14 +39,19 @@ function cookie_consent_permission() {
  * Implements hook_init().
  */
 function cookie_consent_init() {
-  global $base_root;
+  global $base_root, $user, $cookie_consent;
+
   $paths = path_get_admin_paths();
   $current_path = current_path();
 
   // If we're dealing with an admin page, don't show the cookie message.
-  if (preg_match('/^admin/', $current_path) or drupal_match_path($current_path, $paths['admin'])) {
+  if (preg_match('/^admin/', $current_path) or drupal_match_path($current_path, $paths['admin'])
+      or !array_intersect(array_keys($user->roles), variable_get('cookie_consent_roles', array()))) {
+    $cookie_consent = FALSE;
     return;
   }
+
+  $cookie_consent = TRUE;
 
   $cookies = array_intersect_assoc(module_invoke_all('cookie_consent_categories'), _cookie_consent_get_patterns());
 
@@ -151,7 +156,8 @@ function cookie_consent_add() {
  * enable or disable pieces of javascript.
  */
 function cookie_consent_process_html_tag(&$vars) {
-  if (isset($vars['element']['#tag']) and $vars['element']['#tag'] === 'script') {
+  global $cookie_consent;
+  if ($cookie_consent and isset($vars['element']['#tag']) and $vars['element']['#tag'] === 'script') {
     foreach (_cookie_consent_get_patterns() as $category => $patterns) {
       foreach ($patterns as $pattern) {
         $pattern = '#' . preg_quote($pattern) . '#';
@@ -174,7 +180,8 @@ function cookie_consent_process_html_tag(&$vars) {
  * Implements hook_page_alter().
  */
 function cookie_consent_page_alter(&$page) {
-  if (variable_get('cookie_consent_filter_iframe', FALSE)) {
+  global $cookie_consent;
+  if ($cookie_consent and variable_get('cookie_consent_filter_iframe', FALSE)) {
     $page['#post_render'][] = 'cookie_consent_alter_iframe';
   }
 }
