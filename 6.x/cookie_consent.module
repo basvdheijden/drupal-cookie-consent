@@ -33,7 +33,7 @@ function cookie_consent_menu() {
 function cookie_consent_javascript_options() {
   global $base_root;
   drupal_set_header('Content-Type: text/javascript; charset="utf-8"');
-  $cookies = array_intersect_assoc(module_invoke_all('cookie_consent_categories'), _cookie_consent_get_patterns());
+  $cookies = array_intersect_assoc(_cookie_consent_get_categories(), _cookie_consent_get_patterns());
 
   // We cannot use Drupal.settings, because the cookie compliance
   // script must kick in before the Druapl.settings object is added to the page.
@@ -141,7 +141,7 @@ function cookie_consent_add() {
     return drupal_access_denied();
   }
 
-  $cookies = module_invoke_all('cookie_consent_categories');
+  $cookies = _cookie_consent_get_categories();
   $type = check_plain($_GET['type']);
 
   // Check if we have this type defined.
@@ -211,6 +211,22 @@ function cookie_consent_preprocess_page(&$page) {
 }
 
 /**
+ * API function to retrieve all categories
+ */
+function _cookie_consent_get_categories() {
+  // Get all categories
+  $categories = module_invoke_all('cookie_consent_categories');
+
+  // Let modules get a chance to alter the categories
+  foreach (module_implements('cookie_consent_categories_alter') as $module) {
+    $function = $module . '_cookie_consent_categories_alter';
+    $function($categories);
+  }
+
+  return $categories;
+}
+
+/**
  * API function to retrieve current patterns.
  */
 function _cookie_consent_get_patterns() {
@@ -218,7 +234,9 @@ function _cookie_consent_get_patterns() {
 
   if (!isset($build)) {
     $build = array();
-    foreach (module_invoke_all('cookie_consent_categories') as $category => $info) {
+
+    $categories = _cookie_consent_get_categories();
+    foreach ($categories as $category => $info) {
       $multiline_string = variable_get('cookie_consent_' . $category, NULL);
 
       if ($multiline_string === null OR empty($multiline_string)) {

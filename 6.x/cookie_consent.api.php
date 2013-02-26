@@ -9,13 +9,20 @@
  * This hook lets you provide your own categories for Cookie Consent.
  */
 function hook_cookie_consent_categories() {
-  $cookies = array();
+  $categories = array();
 
   // Make sure that the key does not contain spaces.
-  $cookies['mycategory'] = array(
+  $categories['mycategory'] = array(
     'title' => t('My Category Title'),
     'description' => t('My Category Description.')
   );
 
-  return $cookies;
+  return $categories;
+}
+
+/**
+ * This hook lets you alter the existing categories for Cookie Consent
+ */
+function hook_cookie_consent_categories_alter(&$categories) {
+  $categories['mycategory']['title'] = t('My Title');
 }
