@@ -138,6 +138,8 @@ function cookie_consent_cookie_consent_categories() {
  * or to update an existing record.
  */
 function cookie_consent_add() {
+  global $user;
+
   if (!isset($_GET['type']) or !isset($_GET['value']) or !isset($_GET['ip'])) {
     return drupal_access_denied();
   }
@@ -157,7 +159,16 @@ function cookie_consent_add() {
     'changed' => time(),
   );
 
-  $exists = db_fetch_object(db_query("SELECT ccid, created FROM {cookie_consent} WHERE type = '%s' AND ip = '%s'", $record->type,  $record->ip));
+  if ($user->uid) {
+    $record->uid = (int) $user->uid;
+    $identifier = sprintf("AND uid = %d", $record->uid);
+  }
+  else {
+    $record->uid = NULL;
+    $identifier = sprintf("AND ip = '%s'", check_plain($record->ip));
+  }
+
+  $exists = db_fetch_object(db_query("SELECT ccid, created FROM {cookie_consent} WHERE type = '%s' {$identifier}", $record->type));
 
   $primary_key = NULL;
 

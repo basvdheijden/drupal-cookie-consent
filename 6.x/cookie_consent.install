@@ -12,6 +12,11 @@ function cookie_consent_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
       'ip' => array(
         'type' => 'varchar',
         'length' => 20,
@@ -62,4 +67,18 @@ function cookie_consent_install() {
  */
 function cookie_consent_uninstall() {
   drupal_uninstall_schema('cookie_consent');
+}
+
+/**
+ * Adds the UID field to the cookie_consent table.
+ */
+function cookie_consent_update_6001(&$sandbox) {
+  $ret = array();
+  db_add_field($ret, 'cookie_consent', 'uid', array(
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => FALSE,
+  ));
+
+  return $ret;
 }
