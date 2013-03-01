@@ -12,6 +12,11 @@ function cookie_consent_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
       'ip' => array(
         'type' => 'varchar',
         'length' => 20,
@@ -47,4 +52,16 @@ function cookie_consent_schema() {
   );
 
   return $schema;
+}
+
+
+/**
+ * Adds the UID field to the cookie_consent table.
+ */
+function cookie_consent_update_7001(&$sandbox) {
+  db_add_field('cookie_consent', 'uid', array(
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => FALSE,
+  ));
 }
