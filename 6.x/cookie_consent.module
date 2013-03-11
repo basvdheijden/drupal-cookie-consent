@@ -196,30 +196,41 @@ function cookie_consent_preprocess_page(&$page) {
     return;
   }
 
-  $scripts = array(
-    '<script type="text/javascript" src="/cookie-consent.js"></script>'
-  );
-
-  // Loop through all scripts.
-  if (preg_match_all('/<script.+?<\/script>/si', $page['scripts'], $matches)) {
-    foreach ($matches[0] as $script) {
-      $new_script = FALSE;
-      // Check if there is a match
-      foreach (_cookie_consent_get_patterns() as $category => $patterns) {
-        foreach ($patterns as $pattern) {
-          if (preg_match('#' . preg_quote($pattern) . '#', $script)) {
-            // Form the new script tag
-            $new_script = preg_replace('/type=(["\'])text\/javascript(["\'])/', 'type=$1text/plain$2 class=$1cc-onconsent-' . $category . '$2', $script);
-          }
-        }
-      }
-
-      // Add the right script tag to the list of scripts.
-      $scripts[] = $new_script ? $new_script : $script;
-    }
+  $pattern = '/<script.+?<\/script>/si';
+  // Loop through all scripts in closure.
+  if (preg_match_all($pattern, $page['closure'], $matches)) {
+    $page['closure'] = _cookie_consent_alter_scripts($matches);
   }
 
-  $page['scripts'] = join(PHP_EOL, $scripts);
+  // Loop through all scripts.
+  if (preg_match_all($pattern, $page['scripts'], $matches)) {
+    $scripts = _cookie_consent_alter_scripts($matches);
+    $consent = '<script type="text/javascript" src="/cookie-consent.js"></script>';
+    $page['scripts'] = $consent . $scripts;
+  }
+}
+
+/**
+ * API function to alter scripts for cookie_consent to work.
+ */
+function _cookie_consent_alter_scripts($matches) {
+  foreach ($matches[0] as $script) {
+    $new_script = FALSE;
+    // Check if there is a match
+    foreach (_cookie_consent_get_patterns() as $category => $patterns) {
+      foreach ($patterns as $pattern) {
+        if (preg_match('#' . preg_quote($pattern) . '#', $script)) {
+          // Form the new script tag
+          $new_script = preg_replace('/type=(["\'])text\/javascript(["\'])/', 'type=$1text/plain$2 class=$1cc-onconsent-' . $category . '$2', $script);
+        }
+      }
+    }
+
+    // Add the right script tag to the list of scripts.
+    $scripts[] = $new_script ? $new_script : $script;
+  }
+
+  return join(PHP_EOL, $scripts);
 }
 
 /**
