@@ -198,12 +198,15 @@ function cookie_consent_preprocess_page(&$page) {
 
   $pattern = '/<script.+?<\/script>/si';
   // Loop through all scripts in closure.
-  if (preg_match_all($pattern, $page['closure'], $matches)) {
-    $page['closure'] = _cookie_consent_alter_scripts($matches);
+  if (preg_match_all($pattern, $page['closure'], $matches, PREG_OFFSET_CAPTURE)) {
+    foreach ($matches[0] as $match) {
+      $replacement = _cookie_consent_alter_scripts(array(array($match)));
+      $page['closure'] = str_replace($match[0], $replacement, $page['closure']);
+    }
   }
 
   // Loop through all scripts.
-  if (preg_match_all($pattern, $page['scripts'], $matches)) {
+  if (preg_match_all($pattern, $page['scripts'], $matches, PREG_OFFSET_CAPTURE)) {
     $scripts = _cookie_consent_alter_scripts($matches);
     $consent = '<script type="text/javascript" src="/cookie-consent.js"></script>';
     $page['scripts'] = $consent . $scripts;
@@ -214,7 +217,8 @@ function cookie_consent_preprocess_page(&$page) {
  * API function to alter scripts for cookie_consent to work.
  */
 function _cookie_consent_alter_scripts($matches) {
-  foreach ($matches[0] as $script) {
+  foreach ($matches[0] as $m) {
+    $script = $m[0];
     $new_script = FALSE;
     // Check if there is a match
     foreach (_cookie_consent_get_patterns() as $category => $patterns) {
