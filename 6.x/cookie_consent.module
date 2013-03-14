@@ -20,23 +20,15 @@ function cookie_consent_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['cookie-consent.js'] = array(
-    'title' => t('Cookie Consent Script'),
-    'access arguments' => array('access content'),
-    'page callback' => 'cookie_consent_javascript_options',
-    'type' => MENU_CALLBACK,
-  );
-
   return $items;
 }
 
 function cookie_consent_javascript_options() {
   global $base_root;
-  drupal_set_header('Content-Type: text/javascript; charset="utf-8"');
   $cookies = array_intersect_assoc(_cookie_consent_get_categories(), _cookie_consent_get_patterns());
 
   // We cannot use Drupal.settings, because the cookie compliance
-  // script must kick in before the Druapl.settings object is added to the page.
+  // script must kick in before the Drupal.settings object is added to the page.
   $options = array(
     'style' => variable_get('cookie_consent_style', 'monochrome'),
     'ip' => $_SERVER['REMOTE_ADDR'],
@@ -48,8 +40,7 @@ function cookie_consent_javascript_options() {
     'privacy' => (bool) variable_get('cookie_consent_privacy', 0),
   );
 
-  print 'var ccOptions = ' . drupal_to_js($options) . ';';
-  exit;
+  return '<script>var ccOptions = ' . drupal_to_js($options) . ';</script>';
 }
 
 /**
@@ -207,9 +198,7 @@ function cookie_consent_preprocess_page(&$page) {
 
   // Loop through all scripts.
   if (preg_match_all($pattern, $page['scripts'], $matches, PREG_OFFSET_CAPTURE)) {
-    $scripts = _cookie_consent_alter_scripts($matches);
-    $consent = '<script type="text/javascript" src="/cookie-consent.js"></script>';
-    $page['scripts'] = $consent . $scripts;
+    $page['scripts'] = cookie_consent_javascript_options() . _cookie_consent_alter_scripts($matches);
   }
 }
 
