@@ -628,6 +628,19 @@ var cc =
 					}
 				}
 			});
+
+			var link = ''
+			if (typeof cc.settings.link !== 'undefined' && 
+				typeof cc.settings.link.title !== 'undefined' && 
+				typeof cc.settings.link.url !== 'undefined' && 
+				cc.settings.link.title !== '' 
+				&& cc.settings.link.url !== '') {
+				link = '<li><a href="'+cc.settings.link.url+'">'+cc.settings.link.title+'</a></li>';
+				jQuery('#cc-notification-permissions ul').append(link);
+			}
+			console.log(link);
+			console.log(cc.settings.link, cc.settings);
+
 			jQuery('#cc-notification-wrapper h2').append(' - <a class="cc-link" href="#" id="cc-notification-moreinfo">'+cc.strings.seeDetails+'</a>');
 			if(cc.settings.consenttype == "implicit")
 			{
@@ -1307,6 +1320,10 @@ var cc =
 				}
 
 			});
+
+			if (typeof cc.settings.link !== 'undefined' && typeof cc.settings.link.title !== 'undefined' && typeof cc.settings.link.url !== 'undefined' && cc.settings.link.title !== '' && cc.settings.link.url !== '') {
+        jQuery('<a style="display:block;text-align:center;" href="'+cc.settings.link.url+'">'+cc.settings.link.title+'</a></li>').insertAfter('#cc-modal-wrapper .cc-content');
+      }
 		} else {
 			jQuery('#cc-modal-wrapper .cc-content').append('<p>'+cc.strings.notUsingCookies+'</p>');
 		}

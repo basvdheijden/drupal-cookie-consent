@@ -55,6 +55,7 @@ cc.initialise({
     hideprivacysettingstab: window.self === window.top ? ccOptions.privacy : true,
     bannerPosition: ccOptions.bannerPosition,
     tagPosition: ccOptions.tagPosition,
-    refreshOnConsent: ccOptions.refreshOnConsent
+    refreshOnConsent: ccOptions.refreshOnConsent,
+    link: ccOptions.link
   }
 });

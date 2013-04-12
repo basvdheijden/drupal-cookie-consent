@@ -20,6 +20,14 @@ function cookie_consent_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['cookie-consent/autocomplete/node'] = array(
+    'title' => 'AJAX Autocomplete Node',
+    'access arguments' => array('administer cookie_consent'),
+    'page callback' => '_cookie_consent_autocomplete_node',
+    'file' => 'cookie_consent.admin.inc',
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -66,6 +74,16 @@ function cookie_consent_init() {
 
   $cookie_consent = TRUE;
   $cookies = array_intersect_assoc(_cookie_consent_get_categories(), _cookie_consent_get_patterns());
+  $link = array();
+  if ($cookie_consent_link = variable_get('cookie_consent_link', FALSE)
+      and preg_match('/\[nid:(\d)+\]/', $cookie_consent_link, $matches)
+      and count($matches) > 1
+      and is_numeric($matches[1])) {
+      $link = array(
+        'url' => url('node/' . $matches[1]),
+        'title' => check_plain(variable_get('cookie_consent_link_title', t('More information'))),
+      );
+  }
 
   // We cannot use Drupal.settings, because the cookie compliance
   // script must kick in before the Druapl.settings object is added to the page.
@@ -78,6 +96,7 @@ function cookie_consent_init() {
     'privacy' => variable_get('cookie_consent_privacy', 0),
     'tagPosition' => variable_get('cookie_consent_tag_position', 'vertical-right'),
     'refreshOnConsent' => variable_get('cookie_consent_refresh_on_consent', 0),
+    'link' => $link,
   );
 
   drupal_add_js('var ccOptions = ' . drupal_json_encode($options) . ';', 'inline');
