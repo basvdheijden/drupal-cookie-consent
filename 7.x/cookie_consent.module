@@ -76,7 +76,7 @@ function cookie_consent_init() {
   $cookies = array_intersect_assoc(_cookie_consent_get_categories(), _cookie_consent_get_patterns());
   $link = array();
   if ($cookie_consent_link = variable_get('cookie_consent_link', FALSE)
-      and preg_match('/\[nid:(\d)+\]/', $cookie_consent_link, $matches)
+      and preg_match('/\[nid:(\d+)\]/', $cookie_consent_link, $matches)
       and count($matches) > 1
       and is_numeric($matches[1])) {
       $link = array(
