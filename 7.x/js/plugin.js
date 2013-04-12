@@ -638,8 +638,6 @@ var cc =
 				link = '<li><a href="'+cc.settings.link.url+'">'+cc.settings.link.title+'</a></li>';
 				jQuery('#cc-notification-permissions ul').append(link);
 			}
-			console.log(link);
-			console.log(cc.settings.link, cc.settings);
 
 			jQuery('#cc-notification-wrapper h2').append(' - <a class="cc-link" href="#" id="cc-notification-moreinfo">'+cc.strings.seeDetails+'</a>');
 			if(cc.settings.consenttype == "implicit")
