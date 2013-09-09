@@ -3,7 +3,7 @@
  * Implements hook_menu().
  */
 function cookie_consent_menu() {
-  $items['admin/config/cookie-consent'] = array(
+  $items['admin/config/user-interface/cookie-consent'] = array(
     'title' => t('Cookie Consent Settings'),
     'description' => t('Configure Cookie Consent'),
     'access arguments' => array('administer cookie_consent'),
@@ -57,12 +57,15 @@ function cookie_consent_init() {
     $domains = variable_get('cookie_consent_domains', array());
     $current_domain = domain_get_domain();
 
-    if (!isset($domains[$current_domain['domain_id']])) {
+    if (isset($domains[$current_domain['domain_id']])) {
       $domain = FALSE;
     }
   }
 
-  if (preg_match('/^admin/', $current_path) or drupal_match_path($current_path, $paths['admin'])
+  $excluded_paths = variable_get('cookie_consent_pages', '');
+  $excluded_paths .= PHP_EOL . $paths['admin'];
+
+  if (preg_match('/^admin/', $current_path) or drupal_match_path($current_path, $excluded_paths)
       or !array_intersect(array_keys($user->roles), variable_get('cookie_consent_roles', array()))
       or !$domain) {
     // Cookie consent is configured to not show for this role.
@@ -129,6 +132,7 @@ function cookie_consent_cookie_consent_categories() {
   $cookies['analytics'] = array(
     'title' => t('Analytics'),
     'description' => t('We anonymously measure your use of this website to improve your experience.'),
+    'default' => TRUE,
   );
 
   return $cookies;
@@ -205,6 +209,9 @@ function cookie_consent_process_html_tag(&$vars) {
   if ($cookie_consent and isset($vars['element']['#tag']) and $vars['element']['#tag'] === 'script') {
     foreach (_cookie_consent_get_patterns() as $category => $patterns) {
       foreach ($patterns as $pattern) {
+        if ($pattern === 'dontmatch') {
+          continue;
+        }
         $pattern = '#' . preg_quote($pattern) . '#';
 
         $subject = !empty($vars['element']['#attributes']['src']) ? $vars['element']['#attributes']['src'] : '';
@@ -291,8 +298,12 @@ function _cookie_consent_get_patterns() {
     $build = array();
 
     foreach (_cookie_consent_get_categories() as $category => $info) {
-      $multiline_string = variable_get('cookie_consent_' . $category, NULL);
+      if (isset($info['default']) and $info['default'] === TRUE and !isset($_COOKIE['cc_' . $category])) {
+        $build[$category] = array('dontmatch');
+        continue;
+      }
 
+      $multiline_string = variable_get('cookie_consent_' . $category, NULL);
       if ($multiline_string === null OR empty($multiline_string)) {
         continue;
       }

@@ -40,6 +40,13 @@ function cookie_consent_admin_form() {
     '#default_value' => variable_get('cookie_consent_roles', array()),
   );
 
+  $form['cookie_consent_pages'] = array(
+    '#title' => t('Exclude Cookie Consent'),
+    '#type' => 'textarea',
+    '#description' => t('Cookie Consent will be excluded on the following pages. Fill in one path per line.'),
+    '#default_value' => variable_get('cookie_consent_pages', ''),
+  );
+
   if (module_exists('domain')) {
     foreach(domain_domains() as $domain) {
       $domain_options[$domain['domain_id']] = $domain['sitename'];
@@ -48,10 +55,10 @@ function cookie_consent_admin_form() {
     $form['cookie_consent_domains'] = array(
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#title' => t('Domains'),
+      '#title' => t('Exclude Domains'),
       '#options' => $domain_options,
       '#default_value' => variable_get('cookie_consent_domains', array()),
-      '#description' => t('Determine on which domains the cookie consent is shown.'),
+      '#description' => t('Determine on which domains the cookie consent should not be shown.'),
       '#size' => max(5, count($domain_options)),
     );
   }
