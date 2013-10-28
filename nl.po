@@ -1,0 +1,372 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  cookie_consent.admin.inc: n/a
+#  cookie_consent.module: n/a
+#  js/cookie_consent.js: n/a
+#  cookie_consent.install: n/a
+#  cookie_consent.info: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2013-10-28 14:58+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: cookie_consent.admin.inc:13 cookie_consent.module:87
+msgid "More information"
+msgstr ""
+
+#: cookie_consent.admin.inc:18
+msgid "More information Node Link"
+msgstr ""
+
+#: cookie_consent.admin.inc:19
+msgid "Appends ':link_title' (linking to the selected node) to the bottom of the Cookie Consent banner and privacy tabs. Leave empty to omit this behaviour."
+msgstr ""
+
+#: cookie_consent.admin.inc:27
+msgid "More information Link Title"
+msgstr ""
+
+#: cookie_consent.admin.inc:28
+msgid "Override the title for the link."
+msgstr ""
+
+#: cookie_consent.admin.inc:36
+msgid "Roles"
+msgstr ""
+
+#: cookie_consent.admin.inc:39
+msgid "Determine which roles see the cookie consent banner by default."
+msgstr ""
+
+#: cookie_consent.admin.inc:44
+msgid "Exclude Cookie Consent"
+msgstr ""
+
+#: cookie_consent.admin.inc:46
+msgid "Cookie Consent will be excluded on the following pages. Fill in one path per line."
+msgstr ""
+
+#: cookie_consent.admin.inc:58
+msgid "Exclude Domains"
+msgstr ""
+
+#: cookie_consent.admin.inc:61
+msgid "Determine on which domains the cookie consent should not be shown."
+msgstr ""
+
+#: cookie_consent.admin.inc:69
+msgid "Dark"
+msgstr ""
+
+#: cookie_consent.admin.inc:70
+msgid "Light"
+msgstr ""
+
+#: cookie_consent.admin.inc:71
+msgid "Monochrome"
+msgstr ""
+
+#: cookie_consent.admin.inc:72
+msgid "Custom"
+msgstr ""
+
+#: cookie_consent.admin.inc:75
+msgid "Cookie Consent Style"
+msgstr ""
+
+#: cookie_consent.admin.inc:76
+msgid "Select the desired style for the Cookie Consent feature. If you choose custom, you have to implement your own style."
+msgstr ""
+
+#: cookie_consent.admin.inc:81
+msgid "Hide the Privacy Tab"
+msgstr ""
+
+#: cookie_consent.admin.inc:82
+msgid "Whether the privacy settings tab should be hidden after the user has given consent."
+msgstr ""
+
+#: cookie_consent.admin.inc:87
+msgid "Privacy Tab Position"
+msgstr ""
+
+#: cookie_consent.admin.inc:90
+msgid "Bottom Right"
+msgstr ""
+
+#: cookie_consent.admin.inc:91
+msgid "Bottom Left"
+msgstr ""
+
+#: cookie_consent.admin.inc:92
+msgid "Vertical Left"
+msgstr ""
+
+#: cookie_consent.admin.inc:93
+msgid "Vertical Right"
+msgstr ""
+
+#: cookie_consent.admin.inc:96
+msgid "If the privacy tab is enabled above, you can determine where it will be displayed on the page."
+msgstr ""
+
+#: cookie_consent.admin.inc:101
+msgid "Banner position"
+msgstr ""
+
+#: cookie_consent.admin.inc:103
+msgid "Top"
+msgstr ""
+
+#: cookie_consent.admin.inc:104
+msgid "Bottom"
+msgstr ""
+
+#: cookie_consent.admin.inc:107
+msgid "Determine the position of the Cookie Consent banner on the page."
+msgstr ""
+
+#: cookie_consent.admin.inc:112
+msgid "Refresh on consent"
+msgstr ""
+
+#: cookie_consent.admin.inc:113
+msgid "Whether the browser window should refresh after consent is given."
+msgstr ""
+
+#: cookie_consent.admin.inc:119
+msgid "Filter Iframe tags"
+msgstr ""
+
+#: cookie_consent.admin.inc:120
+msgid "Select this if you want to filter out iframes as well. Deselect if you want to filter only on script tags."
+msgstr ""
+
+#: cookie_consent.admin.inc:127
+msgid "!category Scripts"
+msgstr "!category Scripts"
+
+#: cookie_consent.module:7
+msgid "Cookie Consent Settings"
+msgstr "Cookie Consent Instellingen"
+
+#: cookie_consent.module:8
+msgid "Configure Cookie Consent"
+msgstr "Cookie Consent configureren"
+
+#: cookie_consent.module:17
+msgid "Add a Cookie Consent record"
+msgstr "Cookie Consent record toevoegen"
+
+#: cookie_consent.module:40
+msgid "Administer Cookie Consent"
+msgstr "Cookie Consent beheren"
+
+#: cookie_consent.module:41
+msgid "Perform administration tasks for the Cookie Consent module"
+msgstr ""
+
+#: cookie_consent.module:120 js/cookie_consent.js:0
+msgid "Strictly necessary"
+msgstr "Strikt noodzakelijk"
+
+#: cookie_consent.module:121 js/cookie_consent.js:0
+msgid "Some cookies on this website are strictly necessary and cannot be disabled."
+msgstr "Sommige cookies op deze website zijn strikt noodzakelijk en kunnen niet uitgezet worden."
+
+#: cookie_consent.module:125
+msgid "Social Media"
+msgstr "Sociale Media"
+
+#: cookie_consent.module:126 js/cookie_consent.js:0
+msgid "Facebook, Twitter and other social websites need to know who you are to work properly."
+msgstr "Facebook, Twitter en andere sociale websites dienen te weten wie je bent om goed te functioneren"
+
+#: cookie_consent.module:129 js/cookie_consent.js:0
+msgid "Advertising"
+msgstr "Advertenties"
+
+#: cookie_consent.module:130 js/cookie_consent.js:0
+msgid "Adverts will be chosen for you automatically based on your past behaviour and interests."
+msgstr "Advertenties zullen worden gebaseerd op uw voorkeuren en interesses"
+
+#: cookie_consent.module:133 js/cookie_consent.js:0
+msgid "Analytics"
+msgstr "Statistieken"
+
+#: cookie_consent.module:134 js/cookie_consent.js:0
+msgid "We anonymously measure your use of this website to improve your experience."
+msgstr "We meten uw gebruik op deze website anoniem om uw ervaring te verbeteren"
+
+#: cookie_consent.module:24
+msgid "AJAX Autocomplete Node"
+msgstr ""
+
+#: cookie_consent.install:8
+msgid "Stores who consented on cookies."
+msgstr ""
+
+#: cookie_consent.info:0;0
+msgid "Cookie Consent"
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Developer: Caution! In order to use Cookie Consent, you need to use jQuery 1.4.4 or higher."
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Developer: Warning! It doesn't look like you have set up Cookie Consent correctly.  You must follow all steps of the setup guide at http://silktide.com/cookieconsent/code.  If you believe you are seeing this message in error, you can use the overridewarnings setting (see docs for more information)."
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Developer: Warning! You have set the plugin to only show within the EU, but you have not provided an API key for the IP Info DB.  Check the documentation at http://silktide.com/cookieconsent for more information"
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Developer: Warning! You must provide a valid API key for IP Info DB.  Check the documentation at http://silktide.com/cookieconsent for more information"
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Social media"
+msgstr "Sociale media"
+
+#: js/cookie_consent.js:0
+msgid "Default cookie title"
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Default cookie description."
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Your experience on this site will be improved by allowing cookies"
+msgstr "Uw ervaring op deze site wordt verbeterd door het accepteren van cookies"
+
+#: js/cookie_consent.js:0
+msgid "We use cookies to ensure you get the best experience on our website"
+msgstr "We gebruiken cookies om een goede ervaring op deze website te garanderen"
+
+#: js/cookie_consent.js:0
+msgid "Cookie Consent plugin for the EU cookie law"
+msgstr ""
+
+#: js/cookie_consent.js:0
+msgid "Privacy policy"
+msgstr "Instellingen"
+
+#: js/cookie_consent.js:0
+msgid "Learn more"
+msgstr "Lees meer"
+
+#: js/cookie_consent.js:0
+msgid "see details"
+msgstr "bekijk details"
+
+#: js/cookie_consent.js:0
+msgid "change your settings"
+msgstr "wijzig uw instellingen"
+
+#: js/cookie_consent.js:0
+msgid "hide details"
+msgstr "verberg details"
+
+#: js/cookie_consent.js:0
+msgid "Save preference"
+msgstr "Wijzigingen opslaan"
+
+#: js/cookie_consent.js:0
+msgid "Save for all sites"
+msgstr "Wijzigingen voor alle sites opslaan"
+
+#: js/cookie_consent.js:0
+msgid "Allow cookies"
+msgstr "Cookies toestaan"
+
+#: js/cookie_consent.js:0
+msgid "Close"
+msgstr "Sluiten"
+
+#: js/cookie_consent.js:0
+msgid "Allow for all sites"
+msgstr "Toestaan voor alle websites"
+
+#: js/cookie_consent.js:0
+msgid "This website uses a custom type of cookie which needs specific approval"
+msgstr "Deze website gebruikt een aangepast type cookie dat uw goedkeuring vereist"
+
+#: js/cookie_consent.js:0;0;0
+msgid "Privacy settings"
+msgstr "Privacy instellingen"
+
+#: js/cookie_consent.js:0
+msgid "for this website"
+msgstr "voor deze website"
+
+#: js/cookie_consent.js:0
+msgid "Some features of this website need your consent to remember who you are."
+msgstr "Sommige onderdelen van deze website hebben uw toestemming nodig om te weten wie U bent."
+
+#: js/cookie_consent.js:0
+msgid "Close window"
+msgstr "Venster sluiten"
+
+#: js/cookie_consent.js:0
+msgid "Change settings for all websites"
+msgstr "Wijzig instellingen voor alle websites"
+
+#: js/cookie_consent.js:0
+msgid "Use global setting"
+msgstr "Gebruik algemene instellingen"
+
+#: js/cookie_consent.js:0
+msgid "I consent"
+msgstr "Ik sta toe"
+
+#: js/cookie_consent.js:0
+msgid "I decline"
+msgstr "Ik wijs af"
+
+#: js/cookie_consent.js:0
+msgid "Ask me each time"
+msgstr "Vraag me elke keer"
+
+#: js/cookie_consent.js:0
+msgid "Always allow"
+msgstr "Altijd toestaan"
+
+#: js/cookie_consent.js:0
+msgid "Never allow"
+msgstr "Nooit toestaan"
+
+#: js/cookie_consent.js:0
+msgid "This website does not use any cookies."
+msgstr "Deze website gebruikt geen cookies."
+
+#: js/cookie_consent.js:0
+msgid "Your cookies have been cleared, you will need to reload this page for the settings to have effect."
+msgstr "Uw cookies zijn verwijderd. Ververs de pagina."
+
+#: js/cookie_consent.js:0
+msgid "for all websites"
+msgstr "voor alle websites"
+
+#: js/cookie_consent.js:0
+msgid "You may consent to these cookies for all websites that use this plugin."
+msgstr "U kunt toestemming geven voor alle websites die deze plugin gebruiken."
+
+#: js/cookie_consent.js:0
+msgid "Back to website settings"
+msgstr "Terug naar website instellingen"
+
